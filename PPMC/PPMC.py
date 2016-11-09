@@ -9,6 +9,6 @@ CHAR_PROBABILITY = 2 ** MAX_CHAR_SIZE + 1 #ALL 8 BIT COMBINATIONS + EOF
 PPMC_ORDER = 4 #PRESUMABLY THE "BEST" ORDER
 
 def ppmc(text):
-    compressed_val = 0
+    interval = (0,1)
 
-    return compressed_val
+    return interval

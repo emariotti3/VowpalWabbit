@@ -36,7 +36,7 @@ class Context:
         self.toAdd = character
 
     def tryCompress(self, character, contextList, interval):
-        #Recives a character to be compressed a contextList whiche is a list of all the contexts
+        #Recives a character to be compressed a contextList which is a list of all the contexts
         #that have tried to compress this character and an interval which is a tuple
         #that contains the current compression interval.
 

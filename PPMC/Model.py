@@ -20,7 +20,7 @@ class Model:
             if (currContext in self.contexts.keys()):
                 #Tell the context to try and compress the desired character.
                 newInterval = self.contexts[currContext].tryCompress(character,previousContexts,interval)
-                return (newInterval != interval):
+                return (newInterval != interval)
             else:
                 #This context does not exist in this model, so we add it.
                 self.contexts[currContext] = Context(currContext,character)
