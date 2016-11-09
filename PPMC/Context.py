@@ -1,86 +1,75 @@
 ESCAPE = "ESC"
 INIT_FREQUENCY = 2
-PREVIOUS_CONTEXTS_LIST = 0
-COMPRESSION_PROBABILITY = 1
 
 class Context:
 
-    def __init__(self, conext_key, character):
-        self.key = context_key
-        self.seen_chars = {}
-        self.total_seen = INIT_FREQUENCY
-        self.seen_chars[ESCAPE] = 1
-        self.seen_chars[character] = 1
-        self.char_to_add = ""
+    def __init__(self, conextKey, character):
+        self.key = contextKey
+        self.seenChars = {}
+        self.totalSeen = INIT_FREQUENCY
+        self.seenChars[ESCAPE] = 1
+        self.seenChars[character] = 1
+        self.charToAdd = ""
 
-    def is(context_key):
-        return (self.key == key)
+    def is(contextKey):
+        return (self.key == contextKey)
 
     def hasCharacter(self, character):
-        return character in self.seen_chars.keys()
+        return character in self.seenChars.keys()
 
     def __refreshContext(self):
-        
-        if (not self.char_to_add):
+
+        if (not self.charToAdd):
             return False
-        if (self.has_character(self.to_add)):
-            self.seen_chars[self.to_add] += 1
+        if (self.hasCharacter(self.toAdd)):
+            self.seenChars[self.toAdd] += 1
         else:
-            self.seen_chars[self.to_add] = 1
-            self.seen_chars[ESCAPE] += 1
-            self.total_seen += 1
-        self.total_seen += 1
-        self.to_add = ""
+            self.seenChars[self.toAdd] = 1
+            self.seenChars[ESCAPE] += 1
+            self.totalSeen += 1
+        self.totalSeen += 1
+        self.toAdd = ""
         return True
 
-    def add(character):
+    def __add(character):
         #adds a character to be added to context in following compression step
-        self.to_add = character
+        self.toAdd = character
 
-    def compress(self, character, context):
-        #Recives a character to be compressed and a tuple context = (previous_contexts, compression_prob),
-        #where 'previous_contexts' is a list of all the contexts
-        #that have tried to compress this character and 'compression_prob' is the
-        #emitted compression probability of said character in the previous context.
+    def tryCompress(self, character, contextList, interval):
+        #Recives a character to be compressed a contextList whiche is a list of all the contexts
+        #that have tried to compress this character and an interval which is a tuple
+        #that contains the current compression interval.
 
-        #Returns a tuple that contains (previous_contexts, compression_prob),
-        #where 'previous_contexts' is the list of all previous contexts including this one.
-        #The value returned for 'compression_prob' will not vary if a previous context
-        #had already compressed (compression_prob != 0).
-        #The compression_prob will equal 0 if this context cannot compress the desired character
-        #and previous contexts could not compress either (compression_prob == 0).
-        #If the context is able to compress this character, compression_prob
-        #will equal that character's compression probability in this context.
-
+        #Returns a tuple that contains the new values for the interval if compression
+        #was successful.
+        #If compression was not successful, the initial interval will not be modified.
         #This method will also add the character to the list of seen characters,
         #so there is no need to add it manually.
+
+        #In either case this context will add itself to the list of contexts that
+        #have tried to compress.
         try:
-            self.refresh_context()
-            if (context[COMPRESSION_PROBABILITY] != 0):
-                return context
+            self.__refreshContext()
+            contextList.append(self)
+            newInterval = interval
 
-            compression_prob = 0
-            context_list = context[PREVIOUS_CONTEXTS_LIST]
-
-            if (not self.has_character(character))
-                context_list.append(self)
-            else:
-                totalSeenWithContext = self.total_seen
-                for (seen_char in self.seen_chars):
-                    previously_seen = False
-                    context_list = context[PREVIOUS_CONTEXTS_LIST]
-                    while ((not previously_seen) and context_list):
-                        current_context = context_list[0]
-                        if (context.has_character(seen_char)):
+            if (self.hasCharacter(character))
+                totalSeenWithContext = self.totalSeen
+                for (seenChar in self.seenChars):
+                    previouslySeen = False
+                    previousContexts = contextList
+                    while ((not previouslySeen) and (previousContexts != [])):
+                        currentContext = previousContexts[0]
+                        if (context.hasCharacter(seenChar)):
                             totalSeenWithContext -= 1
-                            previously_seen = True
-                        context_list.pop(0)
+                            previouslySeen = True
+                        previousContexts.pop(0)
 
-                compression_prob = self.seen_chars[character] / totalSeenWithContext
+                compressionProb = self.seenChars[character] / totalSeenWithContext
+                newInterval = interval #TODO: calculate new interval!!!
 
-            new_context = (context_list, compression_prob)
-            self.add(character)
-            return new_context
+            self.__add(character)
+            return newInterval
 
         catch(Exception):
-            return (context_list, 0)
+            return interval
