@@ -1,5 +1,7 @@
 ESCAPE = "ESC"
 INIT_FREQUENCY = 2
+END = 1
+BEGIN = 0
 
 class Context:
 
@@ -7,7 +9,6 @@ class Context:
         self.key = contextKey
         self.seenChars = {}
         self.totalSeen = INIT_FREQUENCY
-        self.seenChars[ESCAPE] = 1
         self.seenChars[character] = 1
         self.charToAdd = ""
 
@@ -25,8 +26,6 @@ class Context:
             self.seenChars[self.toAdd] += 1
         else:
             self.seenChars[self.toAdd] = 1
-            self.seenChars[ESCAPE] += 1
-            self.totalSeen += 1
         self.totalSeen += 1
         self.toAdd = ""
         return True
@@ -35,41 +34,62 @@ class Context:
         #adds a character to be added to context in following compression step
         self.toAdd = character
 
-    def tryCompress(self, character, contextList, interval):
-        #Recives a character to be compressed a contextList which is a list of all the contexts
-        #that have tried to compress this character and an interval which is a tuple
-        #that contains the current compression interval.
+    def __getCharacterListWithExclusionPrinciple(self, contextList):
+        possibleChars = self.seenChars
+        for (seenChar in self.seenChars.keys()):
+            previouslySeen = False
+            previousContexts = contextList
+            while ((not previouslySeen) and (previousContexts != [])):
+                currentContext = previousContexts[0]
+                if (currentContext.hasCharacter(seenChar)):
+                    del possibleChars[seenChar]
+                    previouslySeen = True
+                previousContexts.pop(0)
+        return possibleChars
 
-        #Returns a tuple that contains the new values for the interval if compression
-        #was successful.
-        #If compression was not successful, the initial interval will not be modified.
-        #This method will also add the character to the list of seen characters,
-        #so there is no need to add it manually.
+    def __calculateInterval(self, character, possibleChars, interval):
+        try:
+            escapeFrequency = len(possibleChars)
+            totalFreq = escapeFrequency
+            intervalLength = (interval[END] - interval[BEGIN])
 
-        #In either case this context will add itself to the list of contexts that
-        #have tried to compress.
+            for (frequency in possibleChars.values())
+                totalFreq += frequency
+
+            if (self.hasCharacter(character)):
+                orderedChars = sort(possibleChars.keys())
+                beginning = interval[BEGIN]
+
+                for (currentChar in orderedChars):
+                    charProb = possibleChars[currentChar] / float(totalFreq)
+                    if (character == currentChar):
+                        end = beginning + interval*charProb
+                        return (beginning, end)
+                    else:
+                        beginning += intervalLength * charProb
+            else:                       
+                escapeProb = escapeFrequency / float(totalFreq)
+                beginning = interval[END] - (intervalLength*escapeProb)
+                return (beginning, interval[END])
+
+        catch(ZeroDivisonError):
+            return interval
+
+
+
+    def compress(self, character, contextList, interval):
         try:
             self.__refreshContext()
-            contextList.append(self)
             newInterval = interval
+            compressed = (character in self.seenChars.keys())
 
-            if (self.hasCharacter(character))
-                totalSeenWithContext = self.totalSeen
-                for (seenChar in self.seenChars):
-                    previouslySeen = False
-                    previousContexts = contextList
-                    while ((not previouslySeen) and (previousContexts != [])):
-                        currentContext = previousContexts[0]
-                        if (context.hasCharacter(seenChar)):
-                            totalSeenWithContext -= 1
-                            previouslySeen = True
-                        previousContexts.pop(0)
+            possibleChars = self.__getCharacterListWithExclusionPrinciple(contextList)
+            newInterval = self.__calculateInterval(charcter, possibleChars, interval)
 
-                compressionProb = self.seenChars[character] / totalSeenWithContext
-                newInterval = interval #TODO: calculate new interval!!!
+            if (not self.hasCharacter(character)):
+                self.__add(character)
 
-            self.__add(character)
-            return newInterval
-
+            contextList.append(self)
+            return (compressed, newInterval)
         catch(Exception):
-            return interval
+            return (False, interval)
