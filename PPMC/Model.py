@@ -7,7 +7,6 @@ class Model:
         self.contexts = {}
 
     def compress(self, text, charIndex, previousContexts, interval):
-        
         if (index >= self.number):
             #In this case, the model can take the amount of characters
             #indicated by self.number as context

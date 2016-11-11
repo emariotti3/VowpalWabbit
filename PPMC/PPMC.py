@@ -1,3 +1,6 @@
+import Context.py
+import Model.py
+import BaseModel.py
 
 stopWords = ["a","about","above","across","after","afterwards", "are","around","as","at","be", "because", "been",
              "for","go", "had","has", "have", "him", "his", "her", "hers", "them", "in", "on","theirs", ".", ",", "-",
@@ -8,7 +11,10 @@ MAX_CHAR_SIZE = 8
 CHAR_PROBABILITY = 2 ** MAX_CHAR_SIZE + 1 #ALL 8 BIT COMBINATIONS + EOF
 PPMC_ORDER = 4 #PRESUMABLY THE "BEST" ORDER
 
-def ppmc(text):
+def ppmc(text, order):
     interval = (0,1)
+    models = [BaseModel()]
+    for (i in xrange(0, order+1)):
+        models.append(Model(i))
 
     return interval
