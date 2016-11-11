@@ -7,8 +7,6 @@ stopWords = ["a","about","above","across","after","afterwards", "are","around","
              "it", "is", "was", "who", "when", "where", "which", "what", "that", "the", "there", "they", "then", "this",
              "got", "i", "an", "to", "under", "through", "of", "since", "and", "you", "get", "out", "or", "up", "down"]
 
-MAX_CHAR_SIZE = 8
-CHAR_PROBABILITY = 2 ** MAX_CHAR_SIZE + 1 #ALL 8 BIT COMBINATIONS + EOF
 PPMC_ORDER = 4 #PRESUMABLY THE "BEST" ORDER
 
 def ppmc(text, order):
@@ -16,5 +14,12 @@ def ppmc(text, order):
     models = [BaseModel()]
     for (i in xrange(0, order+1)):
         models.append(Model(i))
-
+    for (pos in xrange(0, len(text))):
+        compressed = False
+        modelNum = order
+        while (!compressed):
+            compression = models[modelNum].compress(text, pos, [], interval)
+            compressed = compression[0]
+            interval = compression[1]
+            modelNum -= 1
     return interval
