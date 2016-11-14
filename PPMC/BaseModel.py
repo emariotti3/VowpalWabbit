@@ -9,4 +9,5 @@ class BaseModel(Model):
 
     def compress(self, text, charIndex, previousContexts, interval):
         character = text[charIndex]
+        print "MODEL #-1\n"
         return self.context.compress(character, previousContexts, interval)
