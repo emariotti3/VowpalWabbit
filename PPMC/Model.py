@@ -1,3 +1,4 @@
+import logging
 from Context import Context
 
 class Model(object):
@@ -23,17 +24,17 @@ class Model(object):
             #In this case, the model can take the amount of characters
             #indicated by self.number as context
             character = text[charIndex]
-            print "MODEL #"+str(self.number)
+            logging.info( "MODEL #"+str(self.number))
             currContext = text[charIndex] if (self.number == 0) else text[charIndex-self.number:charIndex]
-            print "compressing (" +str(currContext)+ ")" + str(character)+"\n"
-            print "available contexts:" +str(self.contexts.keys())+"\n"
+            logging.info( "compressing (" +str(currContext)+ ")" + str(character))
+            logging.info( "available contexts:" +str(self.contexts.keys()))
 
             if (currContext in self.contexts):
                 return self.contexts[currContext].compress(character, previousContexts, interval)
             elif (currContext != ""):
                 #This context does not exist in this model, so we add it.
                 self.__add(Context(currContext,character))
-                print "Added context:" + currContext + " to model "+str(self.number)+"\n"
+                logging.info( "Added context:" + currContext + " to model "+str(self.number))
 
         #This context could not compress this text because
         #it does not contain the desired context.

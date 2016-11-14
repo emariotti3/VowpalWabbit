@@ -1,3 +1,4 @@
+import logging
 from Context import Context
 from Model import Model
 from BaseModel import BaseModel
@@ -10,21 +11,27 @@ stopWords = ["a","about","above","across","after","afterwards", "are","around","
 PPMC_ORDER = 4 #PRESUMABLY THE "BEST" ORDER
 
 def ppmc(text, order):
+    logging.basicConfig(filename='PPMC.log',level=logging.DEBUG)
     text = text.lower()
     interval = (0,1)
     models = [BaseModel()]
-    for i in xrange(0, order+1):
-        models.append(Model(i))
-    for pos in xrange(0, len(text)):
-        compressed = False
-        modelNum = order+1
-        while not compressed:
-            compression = models[modelNum].compress(text, pos, [], interval)
-            compressed = compression[0]
-            interval = compression[1]
-            modelNum -= 1
+    try:
+        for i in xrange(0, order+1):
+            models.append(Model(i))
+        for pos in xrange(0, len(text)):
+            compressed = False
+            modelNum = order+1
+            while not compressed:
+                compression = models[modelNum].compress(text, pos, [], interval)
+                compressed = compression[0]
+                interval = compression[1]
+                modelNum -= 1
+        logging.info("FINISHED RUNNING PPMC. RETURNED INTERVAL:" +"("+str(interval[0])+","+str(interval[1])+")")
+    except Exception,e:
+        logging.exception(str(e))
     return interval
 
-#print ppmc("ZZZAABAABAABBCCCCCCC",2)
-#print ppmc("AAAAAAAAAAAAAAAAAACC",2)
-print ppmc("ABCDAAAABCDEF",2)
+#ppmc("ZZZAABAABAABBCCCCCCC",2)
+#ppmc("AAAAAAAAAAAAAAAAAACC",2)
+if __name__ == '__main__':
+    ppmc("ABCDAAAABCDEF",2)

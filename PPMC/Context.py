@@ -1,3 +1,4 @@
+import logging
 from BaseContext import BaseContext
 
 class Context(BaseContext):
@@ -32,7 +33,7 @@ class Context(BaseContext):
     def compress(self, character, contextList, interval):
         try:
             self.__refreshContext()
-            print "Context "+self.key+" to compress: "+character+ " with "+str(self.seenChars)+"\n"
+            logging.info( "Context "+self.key+" to compress: "+character+ " with "+str(self.seenChars))
             newInterval = interval
             compressed = (character in self.seenChars.keys())
 
@@ -44,5 +45,5 @@ class Context(BaseContext):
             contextList.append(self)
             return (compressed, newInterval)
         except Exception, e:
-            print 'Exception in context'+str(self.key)+': '+ str(e)
+            logging.exception( 'Exception in context'+str(self.key)+': '+ str(e))
             return (False, interval)
