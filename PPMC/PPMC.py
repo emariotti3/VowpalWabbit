@@ -17,7 +17,7 @@ def ppmc(text, order):
         models.append(Model(i))
     for pos in xrange(0, len(text)):
         compressed = False
-        modelNum = order
+        modelNum = order+1
         while not compressed:
             compression = models[modelNum].compress(text, pos, [], interval)
             compressed = compression[0]
@@ -25,5 +25,6 @@ def ppmc(text, order):
             modelNum -= 1
     return interval
 
-print ppmc("ZZZAABAABAABBCCCCCCC",2)
-print ppmc("AAAAAAAAAAAAAAAAAACC",2)
+#print ppmc("ZZZAABAABAABBCCCCCCC",2)
+#print ppmc("AAAAAAAAAAAAAAAAAACC",2)
+print ppmc(" ABCDEFGABCDEF",2)

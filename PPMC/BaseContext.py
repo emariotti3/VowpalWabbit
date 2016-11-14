@@ -33,7 +33,7 @@ class BaseContext(object):
             escapeFrequency = len(possibleChars)
             totalFreq = escapeFrequency
             intervalLength = (interval[END] - interval[BEGIN])
-
+            print "old interval:( "+str(interval[BEGIN])+","+str(interval[END])+")\n"
             for frequency in possibleChars.values():
                 totalFreq += frequency
 
@@ -45,12 +45,15 @@ class BaseContext(object):
                     charProb = possibleChars[currentChar] / float(totalFreq)
                     if (character == currentChar):
                         end = beginning + intervalLength*charProb
+                        print "new interval FOUND:( "+str(beginning)+","+str(end)+")\n"
                         return (beginning, end)
                     else:
                         beginning += intervalLength * charProb
+                        print "new beginning:"+str(beginning)+"\n"
             else:
                 escapeProb = escapeFrequency / float(totalFreq)
                 beginning = interval[END] - (intervalLength*escapeProb)
+                print "new interval on ESCAPE:( "+str(beginning)+","+str(interval[END])+")\n"
                 return (beginning, interval[END])
 
         except ZeroDivisionError:

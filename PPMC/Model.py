@@ -11,8 +11,9 @@ class Model(object):
             #In this case, the model can take the amount of characters
             #indicated by self.number as context
             character = text[charIndex]
-            currContext = text[charIndex-self.number:charIndex-1]
-
+            print "MODEL #"+str(self.number)
+            currContext = text[charIndex-self.number:charIndex]
+            print "compressing (" +str(currContext)+ ")" + str(character)
             for contextName, context in self.contexts.items():
                 if (contextName == currContext):
                     return context.compress(character, previousContexts, interval)
