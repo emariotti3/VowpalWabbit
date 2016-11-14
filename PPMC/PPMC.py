@@ -27,4 +27,4 @@ def ppmc(text, order):
 
 #print ppmc("ZZZAABAABAABBCCCCCCC",2)
 #print ppmc("AAAAAAAAAAAAAAAAAACC",2)
-print ppmc("ABCDEFGABCDEF",2)
+print ppmc("ABCDAAAABCDEF",2)

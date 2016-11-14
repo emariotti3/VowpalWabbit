@@ -7,23 +7,23 @@ class Context(BaseContext):
         self.key = contextKey
         self.seenChars = {}
         self.seenChars[character] = 1
-        self.charToAdd = ""
+        self.toAdd = ""
 
     def __refreshContext(self):
-        if (not self.charToAdd):
+        if (self.toAdd == ""):
             return False
-        if (self.hasCharacter(self.toAdd)):
+        if (super(Context,self).hasCharacter(self.toAdd)):
             self.seenChars[self.toAdd] += 1
         else:
             self.seenChars[self.toAdd] = 1
         self.toAdd = ""
         return True
 
-    def __add(character):
+    def __add(self, character):
         #adds a character to be added to context in following compression step
         self.toAdd = character
 
-    def isContext(contextKey):
+    def isContext(self,contextKey):
         return (self.key == contextKey)
 
     def name(self):
@@ -39,8 +39,7 @@ class Context(BaseContext):
             possibleChars = super(Context,self).getCharacterListWithExclusionPrinciple(contextList)
             newInterval = super(Context,self).calculateInterval(character, possibleChars, interval)
 
-            if (not self.hasCharacter(character)):
-                self.__add(character)
+            self.__add(character)
 
             contextList.append(self)
             return (compressed, newInterval)
