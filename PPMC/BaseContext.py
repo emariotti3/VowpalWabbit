@@ -38,13 +38,13 @@ class BaseContext(object):
                 totalFreq += frequency
 
             if self.hasCharacter(character):
-                orderedChars = sort(possibleChars.keys())
+                orderedChars = sorted(possibleChars.keys())
                 beginning = interval[BEGIN]
 
                 for currentChar in orderedChars:
                     charProb = possibleChars[currentChar] / float(totalFreq)
                     if (character == currentChar):
-                        end = beginning + interval*charProb
+                        end = beginning + intervalLength*charProb
                         return (beginning, end)
                     else:
                         beginning += intervalLength * charProb

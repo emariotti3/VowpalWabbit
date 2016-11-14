@@ -10,6 +10,7 @@ stopWords = ["a","about","above","across","after","afterwards", "are","around","
 PPMC_ORDER = 4 #PRESUMABLY THE "BEST" ORDER
 
 def ppmc(text, order):
+    text = text.lower()
     interval = (0,1)
     models = [BaseModel()]
     for i in xrange(0, order+1):
@@ -24,4 +25,5 @@ def ppmc(text, order):
             modelNum -= 1
     return interval
 
-ppmc("AABAABAABBCAAA",2)
+print ppmc("ZZZAABAABAABBCCCCCCC",2)
+print ppmc("AAAAAAAAAAAAAAAAAACC",2)
