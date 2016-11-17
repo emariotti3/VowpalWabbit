@@ -1,3 +1,5 @@
+import CWHashingFamily
+
 class LSH:
 
     def __init__(self, r, b, minhashFamily):
@@ -5,7 +7,7 @@ class LSH:
         self.b = b
         self.groupTables = [{} for i in xrange(0, b)]
         self.mhFamily = minhashFamily
-        self.lshFamily = cwHashingFamily()
+        self.lshFamily = CWHashingFamily()
 
     def add(self, record):
         #Receives a record to be added to the LSH object.
