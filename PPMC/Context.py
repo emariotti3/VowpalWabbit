@@ -4,7 +4,6 @@ from BaseContext import BaseContext
 class Context(BaseContext):
 
     def __init__(self, contextKey, character):
-        super(Context, self).__init__()
         self.key = contextKey
         self.seenChars = {}
         self.seenChars[character] = 1
@@ -29,6 +28,38 @@ class Context(BaseContext):
 
     def name(self):
         return self.key
+
+    def calculateInterval(self, character, possibleChars, interval):
+        try:
+            escapeFrequency = len(possibleChars)
+            totalFreq = escapeFrequency
+            intervalLength = (interval[END] - interval[BEGIN])
+            logging.info("Old interval:( "+str(interval[BEGIN])+","+str(interval[END])+")")
+            for frequency in possibleChars.values():
+                totalFreq += frequency
+
+            if self.hasCharacter(character):
+                orderedChars = sorted(possibleChars.keys())
+                beginning = interval[BEGIN]
+
+                for currentChar in orderedChars:
+                    charProb = possibleChars[currentChar] / float(totalFreq)
+                    if (character == currentChar):
+                        end = beginning + intervalLength*charProb
+                        logging.info("New interval FOUND:("+str(beginning)+","+str(end)+")")
+                        return (beginning, end)
+                    else:
+                        beginning += intervalLength * charProb
+            else:
+                escapeProb = escapeFrequency / float(totalFreq)
+                beginning = interval[END] - (intervalLength*escapeProb)
+                logging.info("New interval on ESCAPE at context "+str(self.key)+":( "+str(beginning)+","+str(interval[END])+")")
+                return (beginning, interval[END])
+
+        except ZeroDivisionError:
+            logging.exception("Divided by zero at context: " + str(self.key) + "." + str(e))
+            return interval
+
 
     def compress(self, character, contextList, interval):
         try:

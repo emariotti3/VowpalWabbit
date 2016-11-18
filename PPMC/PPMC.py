@@ -3,15 +3,8 @@ from Context import Context
 from Model import Model
 from BaseModel import BaseModel
 
-stopWords = ["a","about","above","across","after","afterwards", "are","around","as","at","be", "because", "been",
-             "for","go", "had","has", "have", "him", "his", "her", "hers", "them", "in", "on","theirs", ".", ",", "-",
-             "it", "is", "was", "who", "when", "where", "which", "what", "that", "the", "there", "they", "then", "this",
-             "got", "i", "an", "to", "under", "through", "of", "since", "and", "you", "get", "out", "or", "up", "down"]
-
-PPMC_ORDER = 4 #PRESUMABLY THE "BEST" ORDER
-
-def ppmc(text, order):
-    logging.basicConfig(filename='PPMC.log',level=logging.DEBUG)
+def ppmc(text, order, log_file='PPMC.log'):
+    logging.basicConfig(filename=log_file,level=logging.DEBUG)
     text = text.lower()
     interval = (0,1)
     models = [BaseModel()]
@@ -31,7 +24,13 @@ def ppmc(text, order):
         logging.exception(str(e))
     return interval
 
-#ppmc("ZZZAABAABAABBCCCCCCC",2)
-#ppmc("AAAAAAAAAAAAAAAAAACC",2)
-if __name__ == '__main__':
-    ppmc("ABCDAAAABCDEF",2)
+FIVE_STARS_TEXT = "i got them in a very timely manner and they're all very large and green. there seems to be an inordinate amount of the seeds e out a weird beige color, but it still tastes great and is a much better deal than any of the indian markets in town. cheers to frontier."
+ONE_STAR_TEXT = "check out the sugar content before you buy!  27 grams/box - the same amount that's in a 12 oz. can of coke!  this is ridiculously high for something that you think is going to be healthy!"
+TEST = "ZZZZZZZZZZZZZZZZZZZZZZWWWWWWASDSADSXWWWWWWYYYZZZZz"
+
+def main():
+    print "PPMC 5 stars review:" + str(ppmc(FIVE_STARS_TEXT,4,'PPMC_5.log'))
+    print "PPMC 1 star review:" + str(ppmc(ONE_STAR_TEXT,4,'PPMC_1.log'))
+    print "PPMC 5 stars review:" + str(ppmc(TEST,4,'TEST.log'))
+
+main()

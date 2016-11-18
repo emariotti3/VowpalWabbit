@@ -2,10 +2,11 @@ import logging
 
 END = 1
 BEGIN = 0
+CTX_NAME = "BASE CONTEXT"
 
 CHARACTERS = {" ":1,"a":1,"b":1,"c":1,"d":1,"e":1,"f":1,"g":1,"h":1,"i":1,"j":1,
             "k":1,"l":1,"m":1,"n":1,"o":1,"p":1,"q":1,"r":1,"s":1,"t":1,"u":1,
-            "v":1,"w":1,"x":1,"y":1,"z":1}
+            "v":1,"w":1,"x":1,"y":1,"z":1, ".": 1, ",":1, "'":1, "!":1, "?":1}
 
 class BaseContext(object):
 
@@ -30,8 +31,7 @@ class BaseContext(object):
 
     def calculateInterval(self, character, possibleChars, interval):
         try:
-            escapeFrequency = len(possibleChars)
-            totalFreq = escapeFrequency
+            totalFreq = 0
             intervalLength = (interval[END] - interval[BEGIN])
             logging.info("Old interval:( "+str(interval[BEGIN])+","+str(interval[END])+")")
             for frequency in possibleChars.values():
@@ -50,13 +50,10 @@ class BaseContext(object):
                     else:
                         beginning += intervalLength * charProb
             else:
-                escapeProb = escapeFrequency / float(totalFreq)
-                beginning = interval[END] - (intervalLength*escapeProb)
-                logging.info("New interval on ESCAPE at context "+str(self.key)+":( "+str(beginning)+","+str(interval[END])+")")
-                return (beginning, interval[END])
+                raise Exception("NO CHARACTER:"+character+" at " + CTX_NAME + "." + str(e))
 
         except ZeroDivisionError:
-            logging.exception("Divided by zero at context: " + str(self.key) + "." + str(e))
+            logging.exception("Divided by zero at context: " + CTX_NAME + "." + str(e))
             return interval
 
 
