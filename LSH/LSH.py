@@ -17,7 +17,7 @@ class LSH:
             #Obtain LSH function 'b'= i from lshFamilyFunction.
             #which we will use to introduce a new value to the
             #obtainted groupHashTable.
-            lshFunction = self.lshFamily.function(i)
+            lshFunction = self.lshFamily.vectorFunction(i)
             #Each LSH function receives r parameters each of which corresponds
             #to a different minhash function applied to the given record.
             minhashes = []
@@ -46,7 +46,7 @@ class LSH:
             #Obtain LSH function 'b'= i from lshFamilyFunction.
             #which we will use to introduce a new value to the
             #obtainted groupHashTable.
-            lshFunction = self.lshFamily.function(i)
+            lshFunction = self.lshFamily.vectorFunction(i)
             #Each LSH function receives r parameters each of which corresponds
             #to a different minhash function applied to the given record.
             minhashes = []

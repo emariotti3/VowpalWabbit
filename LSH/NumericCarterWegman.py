@@ -1,5 +1,6 @@
-class NumericCarterWegman:
+import CarterWegman
 
-    def __init__(self, m, p, a, b):
-        #Returns an instance of NumericHashFunction, which
-        #represents a numeric Carter-Wegman function.
+class NumericCarterWegman(CarterWegman):
+
+    def hash(number):
+        return ((self.a*number + self.b) % self.primeNumber) % self.mBins
