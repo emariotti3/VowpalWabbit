@@ -24,13 +24,16 @@ def ppmc(text, order, log_file='PPMC.log'):
         logging.exception(str(e))
     return interval
 
-FIVE_STARS_TEXT = "i got them in a very timely manner and they're all very large and green. there seems to be an inordinate amount of the seeds e out a weird beige color, but it still tastes great and is a much better deal than any of the indian markets in town. cheers to frontier."
+FIVE_STARS_TEXT = "i got them in a very timely manner and they re all very large and green. there seems to be an inordinate amount of the seeds e out a weird beige color, but it still tastes great and is a much better deal than any of the indian markets in town. cheers to frontier."
 ONE_STAR_TEXT = "check out the sugar content before you buy!  27 grams/box - the same amount that's in a 12 oz. can of coke!  this is ridiculously high for something that you think is going to be healthy!"
-TEST = "ZZZZZZZZZZZZZZZZZZZZZZWWWWWWASDSADSXWWWWWWYYYZZZZz"
+#TEST = "ZZZZZZZZZZZZZZZZZZZZZZWWWWWWASDSADSXWWWWWWYYYZZZZz"
+ANOTHER_FIVE_STAR = "i drink iron goddess oolong pretty often, it is actually my favorite tea and i have a yixing teapot dedicated to it.  the last batch of ig oolong i ordered did not satisfy as much as this has, and if memory serves it might have been more expensive.  when you order this tea you get a seal-able pouch that contains more than enough oolong to get you through a few months if you are a daily drinker like me.  the tea has a toasty flavor and is not particularly astringent.  the tea is very pleasant and you get a great deal of it for your money."
+ANOTHER_ONE_STAR = "this is one of the worse tasting soups i've ever eaten. i hated it, and now i have a full case.  it tastes bitter to me, and my husband wouldn't even try it.  only my cat was trying to reach it on the counter!"
 
 def main():
-    print "PPMC 5 stars review:" + str(ppmc(FIVE_STARS_TEXT,4,'PPMC_5.log'))
-    print "PPMC 1 star review:" + str(ppmc(ONE_STAR_TEXT,4,'PPMC_1.log'))
-    print "PPMC test:" + str(ppmc(TEST,4,'TEST.log'))
+    print "PPMC first 5 stars review:" + str(ppmc(FIVE_STARS_TEXT,4,'PPMC_5.log'))
+    #print "PPMC second 5 stars review:" + str(ppmc(ANOTHER_FIVE_STAR,4,'PPMC_5(2).log'))
+    #print "PPMC first 1 star review:" + str(ppmc(ONE_STAR_TEXT,4,'PPMC_1.log'))
+    #print "PPMC second 1 star review:" + str(ppmc(ANOTHER_ONE_STAR,4,'PPMC_1(2).log'))
 
 main()

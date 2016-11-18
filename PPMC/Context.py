@@ -1,6 +1,9 @@
 import logging
 from BaseContext import BaseContext
 
+END = 1
+BEGIN = 0
+
 class Context(BaseContext):
 
     def __init__(self, contextKey, character):
@@ -69,7 +72,7 @@ class Context(BaseContext):
             compressed = (character in self.seenChars.keys())
 
             possibleChars = super(Context,self).getCharacterListWithExclusionPrinciple(contextList)
-            newInterval = super(Context,self).calculateInterval(character, possibleChars, interval)
+            newInterval = self.calculateInterval(character, possibleChars, interval)
 
             self.__add(character)
 

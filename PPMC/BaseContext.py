@@ -50,7 +50,8 @@ class BaseContext(object):
                     else:
                         beginning += intervalLength * charProb
             else:
-                raise Exception("NO CHARACTER:"+character+" at " + CTX_NAME + "." + str(e))
+                msg = "NO CHARACTER "+str(character)+" at " + CTX_NAME + ". CONTEXT HAS: " + str(self.seenChars.keys())
+                raise Exception(msg)
 
         except ZeroDivisionError:
             logging.exception("Divided by zero at context: " + CTX_NAME + "." + str(e))
