@@ -1,14 +1,14 @@
 import random
-import CarterWegman
 
-class VectorCarterWegman(CarterWegman):
+class VectorCarterWegman():
 
     def __init__(self, m, p, a):
         #Returns an instance of VectorCarterWegman, which
         #represents a Carter-Wegman function for vectors.
         self.primeNumber = p
         self.mBins = m
-        self.seed = a
+        self.a = a
+
 
     def hash(vector):
         hashVal = 0
