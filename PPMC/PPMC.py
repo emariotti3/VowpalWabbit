@@ -31,9 +31,9 @@ ANOTHER_FIVE_STAR = "i drink iron goddess oolong pretty often, it is actually my
 ANOTHER_ONE_STAR = "this is one of the worse tasting soups i've ever eaten. i hated it, and now i have a full case.  it tastes bitter to me, and my husband wouldn't even try it.  only my cat was trying to reach it on the counter!"
 
 def main():
-    print "PPMC first 5 stars review:" + str(ppmc(FIVE_STARS_TEXT,4,'PPMC_5.log'))
+    #print "PPMC first 5 stars review:" + str(ppmc(FIVE_STARS_TEXT,4,'PPMC_5.log'))
     #print "PPMC second 5 stars review:" + str(ppmc(ANOTHER_FIVE_STAR,4,'PPMC_5(2).log'))
     #print "PPMC first 1 star review:" + str(ppmc(ONE_STAR_TEXT,4,'PPMC_1.log'))
-    #print "PPMC second 1 star review:" + str(ppmc(ANOTHER_ONE_STAR,4,'PPMC_1(2).log'))
+    print "PPMC second 1 star review:" + str(ppmc(ANOTHER_ONE_STAR,4,'PPMC_1(2).log'))
 
 main()
