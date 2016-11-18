@@ -31,6 +31,6 @@ TEST = "ZZZZZZZZZZZZZZZZZZZZZZWWWWWWASDSADSXWWWWWWYYYZZZZz"
 def main():
     print "PPMC 5 stars review:" + str(ppmc(FIVE_STARS_TEXT,4,'PPMC_5.log'))
     print "PPMC 1 star review:" + str(ppmc(ONE_STAR_TEXT,4,'PPMC_1.log'))
-    print "PPMC 5 stars review:" + str(ppmc(TEST,4,'TEST.log'))
+    print "PPMC test:" + str(ppmc(TEST,4,'TEST.log'))
 
 main()
