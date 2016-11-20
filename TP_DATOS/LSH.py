@@ -1,12 +1,15 @@
 from CWHashingFamily import CWHashingFamily
 
+BINS = 100
+PRIME = 127
+
 class LSH:
 
     def __init__(self, r, b):
         self.r = r
         self.b = b
         self.groupTables = [{} for i in xrange(0, b)]
-        self.lshFamily = CWHashingFamily()
+        self.lshFamily = CWHashingFamily(BINS, PRIME)
 
     def add(self, record):
         #Receives a record to be added to the LSH object.
@@ -20,11 +23,11 @@ class LSH:
             #to a different minhash function applied to the given record.
             minhashes = record.minhashes(i, self.b)
             pos = lshFunction.hash(minhashes)
-            if (groupHashTable.hasKey(pos)):
+            if (groupHashTable.has_key(pos)):
                 groupHashTable[pos].append(record.id())
             else:
                 groupHashTable[pos] = [record.id()]
-            
+        return record
 
     def getAllSimilarRecords(self, record):
         #Receives a query record.
@@ -41,6 +44,6 @@ class LSH:
             #to a different minhash function applied to the given record.
             minhashes = record.minhashes(i, self.b)
             pos = lshFunction.hash(minhashes)
-            if (groupHashTable.hasKey(pos)):
+            if (groupHashTable.has_key(pos)):
                 similarRecords += groupHashTable[pos]
         return similarRecords
