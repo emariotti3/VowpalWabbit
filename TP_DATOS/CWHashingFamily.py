@@ -1,3 +1,4 @@
+import random
 from math import sqrt
 from itertools import count, islice
 from NumericCarterWegman import NumericCarterWegman
@@ -16,14 +17,15 @@ class CWHashingFamily:
         self.mBins = m
 
     def numericFunction(self, a, b):
-        if (a < 1 or a >= self.primeNumber or b < 0 or b >= self.primeNumber):
-            raise Exception("Invalid parameters! a and b must belong to intervals [1,p) and [0,p) respectively!")
-        return NumericCarterWegman(self.mBins, self.primeNumber, a, b)
+        random.seed(a)
+        coefA = random.randrange(1,self.primeNumber)
+        random.seed(b)
+        coefB = random.randrange(0,self.primeNumber)
+        return NumericCarterWegman(self.mBins, self.primeNumber, coefA, coefB)
 
     def vectorFunction(self, a):
-        if (a < 1 or a >= self.primeNumber):
-            raise Exception("Invalid parameters! a must belong to interval [1,p)!")
-        return VectorCarterWegman(self.mBins, self.primeNumber, a)
+        random.seed(a)
+        return VectorCarterWegman(self.mBins, self.primeNumber, random.randrange(1,self.mBins))
 
     def stringFunction(self, a, numberHashFunction):
         if (self.primeNumber <= (self.mBins/10)):

@@ -33,8 +33,8 @@ class LSH:
         #Receives a query record.
         #Returns a list with all the similar records found.
         similarRecords = []
-        #Receives a record to be added to the LSH object.
-        for i in xrange(1, self.b + 1):
+        
+        for i in xrange(0, self.b):
             groupHashTable = self.groupTables[i]
             #Obtain LSH function 'b'= i from lshFamilyFunction.
             #which we will use to introduce a new value to the
