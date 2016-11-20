@@ -13,7 +13,8 @@ class LSH:
 
     def add(self, record):
         #Receives a record to be added to the LSH object.
-        for i in xrange(1, self.b + 1):
+        
+        for i in xrange(0, self.b):
             groupHashTable = self.groupTables[i]
             #Obtain LSH function 'b'= i from lshFamilyFunction.
             #which we will use to introduce a new value to the
@@ -27,6 +28,8 @@ class LSH:
                 groupHashTable[pos].append(record.id())
             else:
                 groupHashTable[pos] = [record.id()]
+                print "Adding record:" + str(record.id()) + " to LSH at POS:" + str(pos)
+                print "table:"+str(groupHashTable[pos])
         return record
 
     def getAllSimilarRecords(self, record):
@@ -46,4 +49,5 @@ class LSH:
             pos = lshFunction.hash(minhashes)
             if (groupHashTable.has_key(pos)):
                 similarRecords += groupHashTable[pos]
+                print "Getting records from POS:" + str(pos) + " from: " + str(groupHashTable[pos])
         return similarRecords
