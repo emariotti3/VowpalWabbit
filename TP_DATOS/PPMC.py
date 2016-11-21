@@ -1,20 +1,22 @@
 import logging
+import math
+
 from Context import Context
 from Model import Model
 from BaseModel import BaseModel
 
 class PPMC(object):
 
-    def __init__(self, order, m):
+    def __init__(self, order, m=None):
         self.order = order
         if (not m):
             self.models = [BaseModel()]
             for i in xrange(0, order+1):
-                models.append(Model(i))
+                self.models.append(Model(i))
         else:
             self.models = m
 
-    def compress(text, log_file='PPMC.log'):
+    def compress(self, text, log_file='PPMC.log'):
         logging.basicConfig(filename=log_file,level=logging.DEBUG)
         text = text.lower()
         interval = (0,1)
@@ -27,12 +29,12 @@ class PPMC(object):
                     compressed = compression[0]
                     interval = compression[1]
                     modelNum -= 1
-            logging.info("FINISHED RUNNING PPMC. RETURNED INTERVAL:" +"("+str(interval[0])+","+str(interval[1])+")")
+            #logging.info("FINISHED RUNNING PPMC. RETURNED INTERVAL:" +"("+str(interval[0])+","+str(interval[1])+")")
         except Exception,e:
             logging.exception(str(e))
-        return __binary(interval)
+        return self.__binary(interval)
 
-    def __binary(interval):
+    def __binary(self, interval):
         in_interval = False
         binary_str = "0." 
         number = 0
@@ -62,10 +64,11 @@ TWO_STAR_REVIEW = "mccann's steel cut oatmeal is the perfect breakfast for peopl
 
 def main():
     p = PPMC(4)
-    #print "PPMC first 5 stars review:" + str(p.compress(FIVE_STARS_TEXT,4,'PPMC_5.log'))
-    #print "PPMC second 5 stars review:" + str(p.compress(ANOTHER_FIVE_STAR,4,'PPMC_5(2).log'))
-    #print "PPMC first 1 star review:" + str(p.compress(ONE_STAR_TEXT,4,'PPMC_1.log'))
-    #print "PPMC second 1 star review:" + str(p.compress(ANOTHER_ONE_STAR,4,'PPMC_1(2).log'))
-    print "PPMC first 2 star review:" + str(p.compress(TWO_STAR_REVIEW,4,'PPMC_2.log'))
-    #print "PPMC TEST:" + str(p.compress(TEST,4,'TEST.log'))
-main()
+    #print "PPMC first 5 stars review:" + str(p.compress(FIVE_STARS_TEXT,'PPMC_5.log'))
+    #print "PPMC second 5 stars review:" + str(p.compress(ANOTHER_FIVE_STAR,'PPMC_5(2).log'))
+    #print "PPMC first 1 star review:" + str(p.compress(ONE_STAR_TEXT,'PPMC_1.log'))
+    #print "PPMC second 1 star review:" + str(p.compress(ANOTHER_ONE_STAR,'PPMC_1(2).log'))
+    print "PPMC first 2 star review:" + str(p.compress(TWO_STAR_REVIEW,'PPMC_2.log'))
+    #print "PPMC TEST:" + str(p.compress(TEST,'TEST.log'))
+
+   
