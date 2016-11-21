@@ -24,8 +24,7 @@ class CWHashingFamily:
         return NumericCarterWegman(self.mBins, self.primeNumber, coefA, coefB)
 
     def vectorFunction(self, a):
-        random.seed(a)
-        return VectorCarterWegman(self.mBins, self.primeNumber, random.randrange(1,self.mBins))
+        return VectorCarterWegman(self.mBins, self.primeNumber, a)
 
     def stringFunction(self, a, numberHashFunction):
         if (self.primeNumber <= (self.mBins/10)):

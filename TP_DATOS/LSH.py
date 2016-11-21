@@ -29,7 +29,7 @@ class LSH:
             else:
                 groupHashTable[pos] = [record.id()]
                 print "Adding record:" + str(record.id()) + " to LSH at POS:" + str(pos)
-                print "table:"+str(groupHashTable[pos])
+                print "table "+str(i)+" :"+str(groupHashTable[pos])
         return record
 
     def getAllSimilarRecords(self, record):
@@ -47,6 +47,7 @@ class LSH:
             #to a different minhash function applied to the given record.
             minhashes = record.minhashes(i, self.b)
             pos = lshFunction.hash(minhashes)
+            print "obtained pos:" + str(pos) + " for record " + str(record) + "at table " + str(i)
             if (groupHashTable.has_key(pos)):
                 similarRecords += groupHashTable[pos]
                 print "Getting records from POS:" + str(pos) + " from: " + str(groupHashTable[pos])
