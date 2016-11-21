@@ -30,8 +30,25 @@ class PPMC(object):
             logging.info("FINISHED RUNNING PPMC. RETURNED INTERVAL:" +"("+str(interval[0])+","+str(interval[1])+")")
         except Exception,e:
             logging.exception(str(e))
-        return interval
+        return __binary(interval)
 
+    def __binary(interval):
+        in_interval = False
+        binary_str = "0." 
+        number = 0
+        i = -1
+        while not in_interval:
+            n = math.pow(2,i)
+            if (interval[0] <= n+number <= interval[1]):
+                in_interval = True
+            if (n+number <= interval[1]):
+                number += n
+                binary_str += "1"
+            else:
+                binary_str += "0"
+            i -= 1
+        return binary_str
+        
     def models(self):
         return self.models
 
