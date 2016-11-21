@@ -4,7 +4,7 @@ MINHASHES = 1
 class Record():
 
     def __init__(self, record):
-        self.recordId = record[ID]
+        self.recordId = int(record[ID])
         self.minhashList = record[MINHASHES]
 
     def id(self):
