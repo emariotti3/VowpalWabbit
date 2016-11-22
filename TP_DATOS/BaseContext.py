@@ -36,7 +36,7 @@ class BaseContext(object):
         try:
             totalFreq = 0
             intervalLength = (interval[END] - interval[BEGIN])
-            logging.info("Old interval:( "+str(interval[BEGIN])+","+str(interval[END])+")")
+            #logging.info("Old interval:( "+str(interval[BEGIN])+","+str(interval[END])+")")
             for frequency in possibleChars.values():
                 totalFreq += frequency
 
@@ -48,7 +48,7 @@ class BaseContext(object):
                     charProb = possibleChars[currentChar] / float(totalFreq)
                     if (character == currentChar):
                         end = beginning + intervalLength*charProb
-                        logging.info("New interval FOUND:("+str(beginning)+","+str(end)+")")
+                        #logging.info("New interval FOUND:("+str(beginning)+","+str(end)+")")
                         return (beginning, end)
                     else:
                         beginning += intervalLength * charProb
