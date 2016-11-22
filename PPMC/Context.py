@@ -37,7 +37,7 @@ class Context(BaseContext):
             escapeFrequency = len(possibleChars)
             totalFreq = escapeFrequency
             intervalLength = (interval[END] - interval[BEGIN])
-            logging.info("Old interval:( "+str(interval[BEGIN])+","+str(interval[END])+")")
+            #logging.info("Old interval:( "+str(interval[BEGIN])+","+str(interval[END])+")")
             for frequency in possibleChars.values():
                 totalFreq += frequency
 
@@ -49,14 +49,14 @@ class Context(BaseContext):
                     charProb = possibleChars[currentChar] / float(totalFreq)
                     if (character == currentChar):
                         end = beginning + intervalLength*charProb
-                        logging.info("New interval FOUND:("+str(beginning)+","+str(end)+")")
+                        #logging.info("New interval FOUND:("+str(beginning)+","+str(end)+")")
                         return (beginning, end)
                     else:
                         beginning += intervalLength * charProb
             else:
                 escapeProb = escapeFrequency / float(totalFreq)
                 beginning = interval[END] - (intervalLength*escapeProb)
-                logging.info("New interval on ESCAPE at context "+str(self.key)+":( "+str(beginning)+","+str(interval[END])+")")
+                #logging.info("New interval on ESCAPE at context "+str(self.key)+":( "+str(beginning)+","+str(interval[END])+")")
                 return (beginning, interval[END])
 
         except ZeroDivisionError:
@@ -67,7 +67,7 @@ class Context(BaseContext):
     def compress(self, character, contextList, interval):
         try:
             self.__refreshContext()
-            logging.info( "Context "+self.key+" to compress: "+character+ " with "+str(self.seenChars))
+            #logging.info( "Context "+self.key+" to compress: "+character+ " with "+str(self.seenChars))
             newInterval = interval
             compressed = (character in self.seenChars.keys())
 

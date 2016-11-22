@@ -1,4 +1,5 @@
 from CWHashingFamily import CWHashingFamily
+#from threading import Thread, Lock
 
 BINS = 100
 PRIME = 127
@@ -10,10 +11,13 @@ class LSH:
         self.b = b
         self.groupTables = [{} for i in xrange(0, b)]
         self.lshFamily = CWHashingFamily(BINS, PRIME)
-
+        #self.mutex = Lock()
+        
     def add(self, record):
         #Receives a record to be added to the LSH object.
-
+        
+        #self.mutex.acquire()
+        
         for i in xrange(0, self.b):
             groupHashTable = self.groupTables[i]
             #Obtain LSH function 'b'= i from lshFamilyFunction.
@@ -30,6 +34,7 @@ class LSH:
                 groupHashTable[pos] = [record.id()]
                 #print "Adding record:" + str(record.id()) + " to LSH at POS:" + str(pos)
                 #print "table "+str(i)+" :"+str(groupHashTable[pos])
+        #self.mutex.release()
         return record
 
     def getAllSimilarRecords(self, record):
@@ -52,3 +57,6 @@ class LSH:
                 similarRecords += [candidate for candidate in groupHashTable[pos] if int(candidate) != record.id()]
                 #print "Getting records from POS:" + str(pos) + " from: " + str(groupHashTable[pos])
         return similarRecords
+
+    def getTable(self, tableNum):
+        return self.groupTables[tableNum]

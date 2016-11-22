@@ -8,6 +8,7 @@ class StringCarterWegman:
 
     def hash(self, text):
         result = 0
+        text = text.encode('utf-8')
         for i in xrange(len(text)):
             result += ord(text[i])*(self.a**i)
         result = result % self.primeNumber

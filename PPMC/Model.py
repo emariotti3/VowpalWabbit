@@ -24,17 +24,17 @@ class Model(object):
             #In this case, the model can take the amount of characters
             #indicated by self.number as context
             character = text[charIndex]
-            logging.info( "MODEL #"+str(self.number))
+            #logging.info( "MODEL #"+str(self.number))
             currContext = text[charIndex] if (self.number == 0) else text[charIndex-self.number:charIndex]
-            logging.info( "compressing (" +str(currContext)+ ")" + str(character))
-            logging.info( "available contexts:" +str(self.contexts.keys()))
+            #logging.info( "compressing (" +str(currContext)+ ")" + str(character))
+            #logging.info( "available contexts:" +str(self.contexts.keys()))
 
             if (currContext in self.contexts):
                 return self.contexts[currContext].compress(character, previousContexts, interval)
             elif (currContext != ""):
                 #This context does not exist in this model, so we add it.
                 self.__add(Context(currContext,character))
-                logging.info( "Added context:" + currContext + " to model "+str(self.number))
+                #logging.info( "Added context:" + currContext + " to model "+str(self.number))
 
         #This context could not compress this text because
         #it does not contain the desired context.

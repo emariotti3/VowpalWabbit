@@ -15,4 +15,4 @@ class Record():
         return self.minhashList[length*rangeNum : length*rangeNum + length]
     
     def __str__(self):
-        return "("+str(self.recordId)+","+str(self.minhashList)+")"
+        return "("+self.recordId.encode('utf-8')+","+self.minhashList.encode('utf-8')+")"

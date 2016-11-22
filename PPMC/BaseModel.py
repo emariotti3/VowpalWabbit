@@ -10,5 +10,5 @@ class BaseModel(Model):
 
     def compress(self, text, charIndex, previousContexts, interval):
         character = text[charIndex]
-        logging.info("Compressed character: "+ character + " at MODEL -1")
+        #logging.info("Compressed character: "+ character + " at MODEL -1")
         return self.context.compress(character, previousContexts, interval)
