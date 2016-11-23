@@ -6,5 +6,5 @@ class NumericCarterWegman():
         self.a = a
         self.b = b
     
-    def hash(number):
+    def hash(self, number):
         return ((self.a*number + self.b) % self.primeNumber) % self.mBins

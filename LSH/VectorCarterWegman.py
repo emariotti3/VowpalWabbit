@@ -10,10 +10,10 @@ class VectorCarterWegman():
         self.a = a
 
 
-    def hash(vector):
+    def hash(self, vector):
         hashVal = 0
         coefficient = 1
-        random.seed(self.seed)
+        random.seed(self.a)
         for x in vector:
             coefficient = random.randrange(1,self.mBins)
             hashVal += (x*coefficient) % self.primeNumber
