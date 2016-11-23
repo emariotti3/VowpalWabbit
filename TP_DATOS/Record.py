@@ -6,6 +6,7 @@ class Record():
     def __init__(self, record):
         self.recordId = int(record[ID])
         self.minhashList = record[MINHASHES]
+        self.tables = {}
 
     def id(self):
         return self.recordId
@@ -14,5 +15,19 @@ class Record():
         length = len(self.minhashList) / totalBuckets
         return self.minhashList[length*rangeNum : length*rangeNum + length]
     
+    def hashTo(self, table, tablePos):
+        self.tables[table] = tablePos
+        
+    def getTables(self):
+        return self.tables
+    
+    def getTablePos(self, table):
+        if self.tables.has_key(table):
+            return self.tables[table]
+        return -1
+    
+    def isAt(self, table, pos):
+        return self.tables.has_key(table) and (self.tables[table] == pos)
+    
     def __str__(self):
-        return "("+self.recordId.encode('utf-8')+","+self.minhashList.encode('utf-8')+")"
+        return "("+self.recordId+","+self.minhashList+")"
