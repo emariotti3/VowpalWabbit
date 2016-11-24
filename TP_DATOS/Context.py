@@ -6,10 +6,11 @@ BEGIN = 0
 
 class Context(BaseContext):
 
-    def __init__(self, contextKey, character):
+    def __init__(self, contextKey, character=False):
         self.key = contextKey
         self.seenChars = {}
-        self.seenChars[character] = 1
+        if character:
+            self.seenChars[character] = 1
         self.toAdd = ""
 
     def __refreshContext(self):
@@ -81,3 +82,11 @@ class Context(BaseContext):
         except Exception, e:
             logging.exception( 'Exception in context'+str(self.key)+': '+ str(e))
             return (False, interval)
+            
+    def __setSeenChars(self, dicOfChars):
+        self.seenChars = dicOfChars
+
+    def copy(self):
+        other = Context(self.key)
+        other.__setSeenChars(self.seenChars.copy())
+        return other

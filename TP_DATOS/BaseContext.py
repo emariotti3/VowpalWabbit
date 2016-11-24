@@ -65,3 +65,11 @@ class BaseContext(object):
         possibleChars = self.getCharacterListWithExclusionPrinciple(contextList)
         newInterval = self.calculateInterval(character, possibleChars, interval)
         return (True, newInterval)
+    
+    def __setSeenChars(self, dicOfChars):
+        self.seenChars = dicOfChars
+
+    def copy(self):
+        other = BaseContext()
+        other.__setSeenChars(self.seenChars.copy())
+        return other

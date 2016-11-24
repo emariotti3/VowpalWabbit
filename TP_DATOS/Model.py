@@ -39,3 +39,11 @@ class Model(object):
         #This context could not compress this text because
         #it does not contain the desired context.
         return (False, interval)
+
+    def __setContext(self, otherContext):
+        self.context = otherContext
+
+    def copy(self):
+        other = Model(self.number)
+        other.__setContext(self.contexts.copy())
+        return other
