@@ -9,10 +9,10 @@ class LSH:
         self.r = r
         self.b = b
         self.lshFamily = CWHashingFamily(BINS, PRIME)
-        
+
     def add(self, record):
         positions = []
-        #Receives a record to be added to the LSH object.        
+        #Receives a record to be added to the LSH object.
         for i in xrange(0, self.b):
             #Obtain LSH function 'b'= i from lshFamilyFunction.
             #which we will use to introduce a new value to the
@@ -22,9 +22,8 @@ class LSH:
             #to a different minhash function applied to the given record.
             minhashes = record.minhashes(i, self.b)
             pos = lshFunction.hash(minhashes)
-            #record.hashTo(i,pos)
-            positions.append( ((i,pos), [record.prediction()]) )
-        return positions
+            record.hashTo(i,pos)
+        return record
 
     def getAllSimilarRecords(self, record):
         #Receives a query record.
@@ -42,4 +41,3 @@ class LSH:
             pos = lshFunction.hash(minhashes)
             similarRecords.append(((i, pos),[]))
         return similarRecords
-
