@@ -1,11 +1,9 @@
-ID = 0
-MINHASHES = 1
-
 class Record():
 
-    def __init__(self, record):
-        self.recordId = int(record[ID])
-        self.minhashList = record[MINHASHES]
+    def __init__(self, rId, prediction, minhashes):
+        self.recordId = int(rId)
+        self.minhashList = minhashes
+        self.prediction = int(prediction)
         self.tables = {}
 
     def id(self):
@@ -15,11 +13,11 @@ class Record():
         length = len(self.minhashList) / totalBuckets
         return self.minhashList[length*rangeNum : length*rangeNum + length]
     
-    def hashTo(self, table, tablePos):
-        self.tables[table] = tablePos
+    #def hashTo(self, table, tablePos):
+        #self.tables[table] = tablePos
         
     def getTables(self):
-        return self.tables
+        return self.tables.keys()
     
     def getTablePos(self, table):
         if self.tables.has_key(table):
@@ -28,6 +26,9 @@ class Record():
     
     def isAt(self, table, pos):
         return self.tables.has_key(table) and (self.tables[table] == pos)
+    
+    def getPrediction(self):
+        return self.prediction
     
     def __str__(self):
         return "("+self.recordId+","+self.minhashList+")"
